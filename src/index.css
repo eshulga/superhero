@@ -1,0 +1,26 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  font-size: 16px;
+}
+
+h2 {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #cecece;
+}
+
+li {
+  list-style-type: none;
+  text-align: left;
+}

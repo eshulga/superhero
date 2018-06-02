@@ -1,0 +1,36 @@
+.hero-stats {
+  display: none;
+}
+
+.hero-stats.active {
+  display: block;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #cecece;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.hero-wrap {
+  padding: 1rem;
+  background-color: #f1f1f1;
+  margin: 1rem 0;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.397);
+}
+
+.hero-panel {
+  display: flex;
+  justify-content: space-between
+}
+
+.hero-panel button {
+  background-color: transparent;
+  border: none;
+  max-width: 16px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.hero-panel button img {
+  width: 100%;
+}

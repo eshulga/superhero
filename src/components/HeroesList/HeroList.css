@@ -1,0 +1,9 @@
+.hero-search {
+  width: 100%;
+  font-size: 1.25rem;
+  padding: 1rem;
+}
+
+.hero-search:focus {
+  outline: 1px solid #616161;
+}
