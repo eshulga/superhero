@@ -1,0 +1,20 @@
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.input-group select {
+  padding: 0.5rem;
+}
+
+button[type=submit] {
+  float: right;
+  background-color: #7a7a7a;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.397);
+}

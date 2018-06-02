@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Header from '../Header/Header'
 import Panel from '../../utils/Panel'
 import HeroesList from '../HeroesList/HeroesList'
+import NewHeroForm from '../NewHeroForm/NewHeroForm'
 
 import './App.css'
 
@@ -21,7 +22,7 @@ class App extends Component {
         <Header />
         <div className="row">
           <Panel className="col" title='Create Hero'>
-            Heaer would be a form
+            <NewHeroForm />
           </Panel>
           <Panel className="col" title='Heroes'>
             <HeroesList />

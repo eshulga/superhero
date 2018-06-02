@@ -22,7 +22,8 @@
 .row {
   display: flex;
   justify-content: space-between;
-  max-width: 1270px;
+  align-items: flex-start;
+  max-width: 1140px;
   margin: 0 auto;
   position: relative;
 }

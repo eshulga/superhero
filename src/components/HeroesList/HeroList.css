@@ -1,4 +1,4 @@
-.hero-search {
+input[type=text] {
   width: 100%;
   font-size: 1.25rem;
   padding: 1rem;
@@ -6,4 +6,5 @@
 
 .hero-search:focus {
   outline: 1px solid #616161;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.397);
 }
