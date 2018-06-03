@@ -1,8 +1,4 @@
 .hero-stats {
-  display: none;
-}
-
-.hero-stats.active {
   display: block;
   margin-top: 0.75rem;
   padding-top: 0.75rem;

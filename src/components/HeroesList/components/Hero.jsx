@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import infoButton from'../../../assets/img/info.svg';
 import tolistButton from'../../../assets/img/more.svg';
 import removeButton from'../../../assets/img/remove.svg';
@@ -7,6 +8,20 @@ import removeButton from'../../../assets/img/remove.svg';
 import './Hero.css'
 
 class Hero extends Component {
+
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    intelligence: PropTypes.number,
+    strenght: PropTypes.number,
+    speed: PropTypes.number
+  }
+
+  static defaultProps = {
+    name: '',
+    intelligence: 0,
+    strenght: 0,
+    speed: 0
+  }
 
   state = {
     name: this.props.name,
@@ -22,9 +37,21 @@ class Hero extends Component {
     })
   }
 
-  render () {
+  HeroStats = () => {
+    const { intelligence, strenght, speed }  = this.state
 
-    const { name, intelligence, strenght, speed, statsAcive } = this.state
+    return (
+      <div className='hero-stats'>
+      <ul>
+        <li>Strenght: {strenght}</li>
+        <li>Intelligence: {intelligence}</li>
+        <li>Speed: {speed}</li>
+      </ul>
+    </div>
+  )}
+
+  render () {
+    const { name, statsAcive } = this.state
 
     return (
       <li>
@@ -37,31 +64,11 @@ class Hero extends Component {
               <button onClick={this.toggleInfo}><img src={removeButton} alt='remove'/></button>
             </div>
           </div>
-          <div className={['hero-stats', statsAcive ? 'active' : ''].join(' ')}>
-            <ul>
-              <li>Intelligence: {intelligence}</li>
-              <li>Strenght: {strenght}</li>
-              <li>Speed: {speed}</li>
-            </ul>
-          </div>
+          {statsAcive && <this.HeroStats />}
         </div>
       </li>
     )
   }
-}
-
-Hero.propTypes = {
-  name: PropTypes.string.isRequired,
-  intelligence: PropTypes.number,
-  strenght: PropTypes.number,
-  speed: PropTypes.number
-}
-
-Hero.defaultProps = {
-  name: '',
-  intelligence: 0,
-  strenght: 0,
-  speed: 0
 }
 
 export default Hero

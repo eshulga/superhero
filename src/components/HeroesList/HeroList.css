@@ -6,5 +6,4 @@ input[type=text] {
 
 .hero-search:focus {
   outline: 1px solid #616161;
-  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.397);
 }
