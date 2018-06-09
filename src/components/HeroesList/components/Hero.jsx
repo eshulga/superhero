@@ -13,14 +13,16 @@ class Hero extends Component {
     name: PropTypes.string.isRequired,
     intelligence: PropTypes.number,
     strenght: PropTypes.number,
-    speed: PropTypes.number
+    speed: PropTypes.number,
+    onRemove: PropTypes.func
   }
 
   static defaultProps = {
     name: '',
     intelligence: 0,
     strenght: 0,
-    speed: 0
+    speed: 0,
+    onRemove: null
   }
 
   state = {
@@ -52,6 +54,7 @@ class Hero extends Component {
 
   render () {
     const { name, statsAcive } = this.state
+    const { onRemove } = this.props
 
     return (
       <li>
@@ -61,7 +64,7 @@ class Hero extends Component {
             <div className="button-group">
               <button onClick={this.toggleInfo}><img src={infoButton} alt='info'/></button>
               <button onClick={this.toggleInfo}><img src={tolistButton} alt='to list'/></button>
-              <button onClick={this.toggleInfo}><img src={removeButton} alt='remove'/></button>
+              <button onClick={onRemove}><img src={removeButton} alt='remove'/></button>
             </div>
           </div>
           {statsAcive && <this.HeroStats />}

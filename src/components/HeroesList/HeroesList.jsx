@@ -12,12 +12,14 @@ class HeroesList extends Component {
       name: PropTypes.string,
       strenght: PropTypes.number,
       inteligense: PropTypes.number,
-      speed: PropTypes.number
-    })
+      speed: PropTypes.number,
+    }),
+    clearHero: PropTypes.func
   }
 
   static defaultProps = {
-    newHero: {}
+    newHero: {},
+    clearHero: () => null
   }
 
   state = {
@@ -54,7 +56,23 @@ class HeroesList extends Component {
               })
             }
           })
+      this.props.clearHero()
     }
+  }
+
+  removeHero = (position) => () => {
+    axios
+      .delete(`http://localhost:3001/heroes/${this.state.list[position].id}`)
+      .then( result => {
+        if( result.status === 200) {
+          const newList =  [...this.state.list]
+          newList.splice(position, 1)
+
+          this.setState({
+            list: newList
+          })
+        }
+      })
   }
 
   handleSearch = (e) => {
@@ -77,7 +95,7 @@ class HeroesList extends Component {
       <div className="hero-list">
         <input className="hero-search" type="text" value={this.searchQuery} name="search" onChange={this.handleSearch} placeholder="Search by name"/>
         <ul>
-          {renderList.map((item) => <Hero {...item} key={item.id}/>)}
+          {renderList.map((item, i) => <Hero {...item} key={item.id} onRemove={this.removeHero(i)} />)}
         </ul>
       </div>
     )

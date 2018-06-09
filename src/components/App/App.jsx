@@ -22,6 +22,12 @@ class App extends Component {
     })
   }
 
+  clearHero = () => {
+    this.setState({
+      newHero: {}
+    })
+  }
+
   render(){
     return (
       <div className="App">
@@ -31,7 +37,7 @@ class App extends Component {
             <NewHeroForm onSubmit={this.newHeroSubmit} />
           </Panel>
           <Panel className="col" title='Heroes'>
-            <HeroesList newHero={this.state.newHero} />
+            <HeroesList newHero={this.state.newHero} clearHero={this.clearHero} />
           </Panel>
           <Panel className="col" title='Squad Editor'>
             Heaer would be a form

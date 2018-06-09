@@ -30,6 +30,13 @@ class NewHeroForm extends Component {
     const { name } = this.state
     if(name !== ''){
       this.props.onSubmit({state: this.state})
+
+      this.setState({
+        name: '',
+        strenght: 1,
+        intelligence: 1,
+        speed: 1
+      })
     }
   }
 
@@ -44,7 +51,7 @@ class NewHeroForm extends Component {
     return (
       <div className="input-group">
         <span>{name}</span>
-        <select onChange={this.handleSelect} name={name} defaultValue={1}>
+        <select onChange={this.handleSelect} name={name} value={this.state[name]}>
           {options}
         </select>
       </div>
