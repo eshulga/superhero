@@ -4,9 +4,17 @@ import './NewHeroForm.css'
 
 class NewHeroForm extends Component {
 
+  static propTypes = {
+    onSubmit: PropTypes.func
+  }
+
+  static defaultProps = {
+    onSubmit: () => null
+  }
+
   state = {
     name: '',
-    strenght: 1,
+    strength: 1,
     intelligence: 1,
     speed: 1
   }
@@ -33,7 +41,7 @@ class NewHeroForm extends Component {
 
       this.setState({
         name: '',
-        strenght: 1,
+        strength: 1,
         intelligence: 1,
         speed: 1
       })
@@ -70,7 +78,7 @@ class NewHeroForm extends Component {
             value={this.state.name}
             placeholder='New hero name'
           />
-          {this.selectNum({name: 'strenght'})}
+          {this.selectNum({name: 'strength'})}
           {this.selectNum({name: 'intelligence'})}
           {this.selectNum({name: 'speed'})}
           <button type='submit'>Create</button>
@@ -81,12 +89,3 @@ class NewHeroForm extends Component {
 }
 
 export default NewHeroForm
-
-NewHeroForm.propTypes = {
-  onSubmit: PropTypes.func
-}
-
-NewHeroForm.defaultProps = {
-  onSubmit: () => null
-}
-

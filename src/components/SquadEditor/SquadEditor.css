@@ -1,0 +1,19 @@
+.squad-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.squad-editor .controls {
+  display: flex;
+  justify-content: space-around;
+}
+
+.squad-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.squad-stats span {
+  text-align: left;
+}

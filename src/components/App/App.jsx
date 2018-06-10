@@ -3,6 +3,7 @@ import Header from '../Header/Header'
 import Panel from '../../utils/Panel'
 import HeroesList from '../HeroesList/HeroesList'
 import NewHeroForm from '../NewHeroForm/NewHeroForm'
+import SquadEditor from '../SquadEditor/SquadEditor'
 
 import './App.css'
 
@@ -12,7 +13,8 @@ class App extends Component {
     super(props)
 
     this.state = {
-      newHero: {}
+      newHero: {},
+      sqadEditorList: []
     }
   }
 
@@ -28,6 +30,25 @@ class App extends Component {
     })
   }
 
+  clearSquadEditor = () => {
+    this.setState({
+      sqadEditorList: []
+    })
+  }
+
+  heroToSquad = (hero) => () => {
+    this.setState({
+      sqadEditorList: [hero, ...this.state.sqadEditorList]
+    })
+  }
+
+  heroFromEditRemove = (id) => () => {
+    console.log(id)
+    this.setState({
+      sqadEditorList: this.state.sqadEditorList.filter( item => item.id !== id)
+    })
+  }
+
   render(){
     return (
       <div className="App">
@@ -37,10 +58,19 @@ class App extends Component {
             <NewHeroForm onSubmit={this.newHeroSubmit} />
           </Panel>
           <Panel className="col" title='Heroes'>
-            <HeroesList newHero={this.state.newHero} clearHero={this.clearHero} />
+            <HeroesList
+              newHero={this.state.newHero}
+              clearHero={this.clearHero}
+              heroToSquad={this.heroToSquad}
+              heroesInEditor={this.state.sqadEditorList}
+            />
           </Panel>
           <Panel className="col" title='Squad Editor'>
-            Heaer would be a form
+            <SquadEditor
+              editorList={this.state.sqadEditorList}
+              onClear={this.clearSquadEditor}
+              heroRemove={this.heroFromEditRemove}
+            />
           </Panel>
           <Panel className="col" title='Saved squads'>
             Heaer would be a form

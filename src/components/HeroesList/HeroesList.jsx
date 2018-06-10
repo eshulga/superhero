@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import Hero from './components/Hero'
+import Hero from '../Hero/Hero'
 
 import './HeroList.css'
 
@@ -10,15 +10,26 @@ class HeroesList extends Component {
   static propTypes = {
     newHero: PropTypes.shape({
       name: PropTypes.string,
-      strenght: PropTypes.number,
+      strength: PropTypes.number,
       inteligense: PropTypes.number,
       speed: PropTypes.number,
     }),
-    clearHero: PropTypes.func
+    heroesInEditor: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        strength: PropTypes.number,
+        inteligense: PropTypes.number,
+        speed: PropTypes.number
+      })
+    ),
+    clearHero: PropTypes.func.isRequired,
+    heroToSquad: PropTypes.func.isRequired
   }
 
   static defaultProps = {
     newHero: {},
+    heroesInEditor: [],
     clearHero: () => null
   }
 
@@ -40,6 +51,7 @@ class HeroesList extends Component {
 
   componentDidUpdate () {
     this.newHero(this.props.newHero)
+    console.log('//// HeroList did update ////')
   }
 
   newHero = ( newHero ) => {
@@ -60,16 +72,13 @@ class HeroesList extends Component {
     }
   }
 
-  removeHero = (position) => () => {
+  removeHero = (itemId) => () => {
     axios
-      .delete(`http://localhost:3001/heroes/${this.state.list[position].id}`)
+      .delete(`http://localhost:3001/heroes/${itemId}`)
       .then( result => {
         if( result.status === 200) {
-          const newList =  [...this.state.list]
-          newList.splice(position, 1)
-
           this.setState({
-            list: newList
+            list: this.state.list.filter(item => item.id !== itemId)
           })
         }
       })
@@ -89,13 +98,28 @@ class HeroesList extends Component {
   render () {
     const { list, searchList, searchQuery } = this.state
 
+    const { heroesInEditor } = this.props
+
     const renderList = searchQuery.length > 0 ? searchList : list
 
     return (
       <div className="hero-list">
         <input className="hero-search" type="text" value={this.searchQuery} name="search" onChange={this.handleSearch} placeholder="Search by name"/>
         <ul>
-          {renderList.map((item, i) => <Hero {...item} key={item.id} onRemove={this.removeHero(i)} />)}
+          {renderList
+            .filter((hero) => {
+              const heroId = hero.id
+              const isInList = heroesInEditor.some((item) => item.id === heroId)
+
+              return !isInList
+            })
+            .map((item) => <Hero
+                                {...item}
+                                key={item.id}
+                                onRemove={this.removeHero(item.id)}
+                                heroToSquad={this.props.heroToSquad}
+                              />)
+          }
         </ul>
       </div>
     )
