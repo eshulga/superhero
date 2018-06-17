@@ -1,15 +1,13 @@
-import React from 'react'
-import logo from '../../assets/img/logo.svg'
+import React from 'react';
+import logo from '../../assets/img/logo.svg';
 
-function Header () {
+function Header() {
   return (
     <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" /><h1>Reactive Heroes</h1>
+      <img src={logo} className="App-logo" alt="logo" />
+      <h1>Reactive Heroes</h1>
     </header>
-  )
+  );
 }
 
-export default Header
-
-
-
+export default Header;

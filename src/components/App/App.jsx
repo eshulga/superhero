@@ -1,105 +1,103 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 
-import Header from '../Header/Header'
-import Panel from '../../common/Panel'
-import HeroesList from '../HeroesList/HeroesList'
-import NewHeroForm from '../NewHeroForm/NewHeroForm'
-import SquadEditor from '../SquadEditor/SquadEditor'
-import SquadList  from '../SquadList/SquadList'
-import { getSquadList, postSquad, deleteSquad } from '../../utils/api'
+import Header from '../Header/Header';
+import Panel from '../../common/Panel';
+import HeroesList from '../HeroesList/HeroesList';
+import NewHeroForm from '../NewHeroForm/NewHeroForm';
+import SquadEditor from '../SquadEditor/SquadEditor';
+import SquadList from '../SquadList/SquadList';
+import { getSquadList, postSquad, deleteSquad } from '../../utils/api';
 
-import './App.css'
+import './App.css';
 
 class App extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       newHero: {},
       squadEditorList: [],
-      squadsList : []
-    }
+      squadsList: [],
+    };
   }
 
-  componentDidMount () {
-    getSquadList()
-      .then( result => {
-        this.setState({
-          squadsList: [...result.data]
-        })
-      })
+  componentDidMount() {
+    getSquadList().then(result => {
+      this.setState({
+        squadsList: [...result.data],
+      });
+    });
   }
 
-  newHeroSubmit = (newHero) => {
+  newHeroSubmit = newHero => {
     this.setState({
-      newHero: newHero.state
-    })
-  }
+      newHero: newHero.state,
+    });
+  };
 
   clearHero = () => {
     this.setState({
-      newHero: {}
-    })
-  }
+      newHero: {},
+    });
+  };
 
   clearSquadEditor = () => {
     this.setState({
-      squadEditorList: []
-    })
-  }
+      squadEditorList: [],
+    });
+  };
 
-  heroToSquad = (hero) => () => {
+  heroToSquad = hero => () => {
     this.setState({
-      squadEditorList: [hero, ...this.state.squadEditorList]
-    })
-  }
+      squadEditorList: [hero, ...this.state.squadEditorList],
+    });
+  };
 
-  saveSquad = (stats) => () => {
-    const squadEditorList = this.state.squadEditorList
+  saveSquad = stats => () => {
+    const squadEditorList = this.state.squadEditorList;
 
     if (squadEditorList && squadEditorList.length > 0) {
       const squad = {
         stats,
-        heroes: squadEditorList
-      }
+        heroes: squadEditorList,
+      };
 
-    postSquad({...squad})
-      .then( response => {
-        if(response.status === 201){
+      postSquad({ ...squad }).then(response => {
+        if (response.status === 201) {
           this.setState({
             squadsList: [response.data, ...this.state.squadsList],
-            squadEditorList: []
-          })
+            squadEditorList: [],
+          });
         }
-      })
+      });
     }
-  }
+  };
 
-  squadRemove = (id) => () => {
-    deleteSquad(id)
-      .then( () => {
-        this.setState({
-          squadsList: this.state.squadsList.filter(item => item.id !== id)
-        })
-      })
-  }
+  squadRemove = id => () => {
+    deleteSquad(id).then(() => {
+      this.setState({
+        squadsList: this.state.squadsList.filter(item => item.id !== id),
+      });
+    });
+  };
 
-  heroFromEditRemove = (id) => () => {
+  heroFromEditRemove = id => () => {
     this.setState({
-      squadEditorList: this.state.squadEditorList.filter(item => item.id !== id)
-    })
-  }
+      squadEditorList: this.state.squadEditorList.filter(
+        item => item.id !== id,
+      ),
+    });
+  };
 
-  render(){
+  render() {
     return (
       <div className="App">
         <Header />
         <div className="row">
-          <Panel className="col" title='Create Hero'>
+          <Panel className="col" title="Create Hero">
             <NewHeroForm onSubmit={this.newHeroSubmit} />
           </Panel>
-          <Panel className="col" title='Heroes'>
+          <Panel className="col" title="Heroes">
             <HeroesList
               newHero={this.state.newHero}
               clearHero={this.clearHero}
@@ -107,7 +105,7 @@ class App extends Component {
               heroesInEditor={this.state.squadEditorList}
             />
           </Panel>
-          <Panel className="col" title='Squad Editor'>
+          <Panel className="col" title="Squad Editor">
             <SquadEditor
               editorList={this.state.squadEditorList}
               onClear={this.clearSquadEditor}
@@ -115,7 +113,7 @@ class App extends Component {
               heroRemove={this.heroFromEditRemove}
             />
           </Panel>
-          <Panel className="col" title='Saved squads'>
+          <Panel className="col" title="Saved squads">
             <SquadList
               squads={this.state.squadsList}
               onRemove={this.squadRemove}
@@ -123,7 +121,7 @@ class App extends Component {
           </Panel>
         </div>
       </div>
-    )
+    );
   }
 }
 

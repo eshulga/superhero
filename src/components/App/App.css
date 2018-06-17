@@ -34,10 +34,11 @@
   padding: 10px;
   width: 24%;
   background-color: #fafafa;
-  box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
 }
 
-button[type=submit], .squad-editor .controls button {
+button[type=submit],
+.squad-editor .controls button {
   float: right;
   background-color: #7a7a7a;
   border: none;
@@ -48,6 +49,10 @@ button[type=submit], .squad-editor .controls button {
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import infoButton from'../../assets/img/info.svg';
-import tolistButton from'../../assets/img/more.svg';
-import removeButton from'../../assets/img/remove.svg';
+import infoButton from '../../assets/img/info.svg';
+import tolistButton from '../../assets/img/more.svg';
+import removeButton from '../../assets/img/remove.svg';
 
-import './Hero.css'
+import './Hero.css';
 
 class Hero extends Component {
-
   static propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -17,8 +16,8 @@ class Hero extends Component {
     speed: PropTypes.number,
     onRemove: PropTypes.func,
     heroToSquad: PropTypes.func,
-    inEditor: PropTypes.bool
-  }
+    inEditor: PropTypes.bool,
+  };
 
   static defaultProps = {
     id: 0,
@@ -28,33 +27,41 @@ class Hero extends Component {
     speed: 0,
     onRemove: null,
     heroToSquad: null,
-    inEditor: false
-  }
+    inEditor: false,
+  };
 
   state = {
     statsAcive: false,
-  }
+  };
 
   toggleInfo = () => {
     this.setState({
-      statsAcive: !this.state.statsAcive
-    })
-  }
+      statsAcive: !this.state.statsAcive,
+    });
+  };
 
-  HeroStats = ({ intelligence, strength, speed }) =>
-    (
-      <div className='hero-stats'>
-        <ul>
-          <li>strength: {strength}</li>
-          <li>Intelligence: {intelligence}</li>
-          <li>Speed: {speed}</li>
-        </ul>
-      </div>
-    )
+  HeroStats = ({ intelligence, strength, speed }) => (
+    <div className="hero-stats">
+      <ul>
+        <li>strength: {strength}</li>
+        <li>Intelligence: {intelligence}</li>
+        <li>Speed: {speed}</li>
+      </ul>
+    </div>
+  );
 
-  render () {
-    const { statsAcive } = this.state
-    const { name, id, onRemove, heroToSquad, inEditor, speed, strength, intelligence } = this.props
+  render() {
+    const { statsAcive } = this.state;
+    const {
+      name,
+      id,
+      onRemove,
+      heroToSquad,
+      inEditor,
+      speed,
+      strength,
+      intelligence,
+    } = this.props;
 
     return (
       <li>
@@ -63,25 +70,39 @@ class Hero extends Component {
             {name}
             <div className="button-group">
               <button onClick={this.toggleInfo}>
-                <img src={infoButton} alt='info'/>
+                <img src={infoButton} alt="info" />
               </button>
-              { !inEditor
-                ?
-                <button onClick={heroToSquad({ id, name, speed, strength, intelligence})}>
-                  <img src={tolistButton} alt='to list'/>
+              {!inEditor ? (
+                <button
+                  onClick={heroToSquad({
+                    id,
+                    name,
+                    speed,
+                    strength,
+                    intelligence,
+                  })}>
+                  <img src={tolistButton} alt="to list" />
                 </button>
-                : ''
-              }
-              <button onClick={ inEditor ? onRemove(id) : onRemove }>
-                <img src={removeButton} alt='remove'/>
+              ) : (
+                ''
+              )}
+              <button onClick={inEditor ? onRemove(id) : onRemove}>
+                <img src={removeButton} alt="remove" />
               </button>
             </div>
           </div>
-          {statsAcive && <this.HeroStats name={name} strength={strength} speed={speed} intelligence={intelligence} />}
+          {statsAcive && (
+            <this.HeroStats
+              name={name}
+              strength={strength}
+              speed={speed}
+              intelligence={intelligence}
+            />
+          )}
         </div>
       </li>
-    )
+    );
   }
 }
 
-export default Hero
+export default Hero;
