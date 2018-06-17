@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import Hero from '../Hero/Hero'
+import { getHeroList, postHero, deleteHero } from '../../utils/api'
 
 import './HeroList.css'
 
@@ -40,8 +40,7 @@ class HeroesList extends Component {
   }
 
   componentDidMount () {
-    axios
-      .get('http://localhost:3001/heroes')
+    getHeroList()
       .then( result => {
         this.setState({
           list: result.data
@@ -51,7 +50,6 @@ class HeroesList extends Component {
 
   componentDidUpdate () {
     this.newHero(this.props.newHero)
-    console.log('//// HeroList did update ////')
   }
 
   newHero = ( newHero ) => {
@@ -59,28 +57,22 @@ class HeroesList extends Component {
       const heroExist = this.state.list.filter( item => item.name === newHero.name )
 
       if (heroExist.length === 0)
-        axios
-          .post('http://localhost:3001/heroes', {...newHero})
+        postHero({...newHero})
           .then( response => {
-            if(response.status === 201){
-              this.setState({
-                list: [response.data, ...this.state.list]
-              })
-            }
+            this.setState({
+              list: [response.data, ...this.state.list]
+            })
           })
       this.props.clearHero()
     }
   }
 
   removeHero = (itemId) => () => {
-    axios
-      .delete(`http://localhost:3001/heroes/${itemId}`)
-      .then( result => {
-        if( result.status === 200) {
+    deleteHero(itemId)
+      .then( () => {
           this.setState({
             list: this.state.list.filter(item => item.id !== itemId)
           })
-        }
       })
   }
 
@@ -101,24 +93,23 @@ class HeroesList extends Component {
     const { heroesInEditor } = this.props
 
     const renderList = searchQuery.length > 0 ? searchList : list
+    const filteredList = renderList.filter((hero) => {
+                                      const heroId = hero.id
+                                      const isInList = heroesInEditor.some((item) => item.id === heroId)
 
+                                      return !isInList
+                                    })
     return (
       <div className="hero-list">
         <input className="hero-search" type="text" value={this.searchQuery} name="search" onChange={this.handleSearch} placeholder="Search by name"/>
         <ul>
-          {renderList
-            .filter((hero) => {
-              const heroId = hero.id
-              const isInList = heroesInEditor.some((item) => item.id === heroId)
-
-              return !isInList
-            })
+          { filteredList.length > 0 ? filteredList
             .map((item) => <Hero
                                 {...item}
                                 key={item.id}
                                 onRemove={this.removeHero(item.id)}
                                 heroToSquad={this.props.heroToSquad}
-                              />)
+                              />) : 'no result ...'
           }
         </ul>
       </div>

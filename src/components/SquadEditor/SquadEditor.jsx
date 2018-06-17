@@ -16,7 +16,8 @@ class SquadEditor extends Component {
       })
     ).isRequired,
     onClear: PropTypes.func.isRequired,
-    heroRemove: PropTypes.func
+    onSave: PropTypes.func.isRequired,
+    heroRemove: PropTypes.func,
   }
 
   static defaultProps = {
@@ -59,12 +60,16 @@ class SquadEditor extends Component {
   render () {
 
     const { strengthTotal, speedTotal, intelligenceTotal} = this.state
-    const { editorList, onClear, heroRemove } = this.props
+    const { editorList, onClear, onSave, heroRemove } = this.props
 
     return (
       <div className='squad-editor'>
         <div className="controls">
-          <button>save</button>
+          <button onClick={onSave({
+            str: strengthTotal,
+            spd: speedTotal,
+            int: intelligenceTotal
+          })}>save</button>
           <button onClick={onClear}>reset</button>
         </div>
         <div className="squad-stats">
@@ -79,7 +84,8 @@ class SquadEditor extends Component {
                                           key={item.id}
                                           {...item}
                                           onRemove={heroRemove}
-                                          inEditor />)
+                                          inEditor
+                                        />)
             }
           </ul>
         </div>

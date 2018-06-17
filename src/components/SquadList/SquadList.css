@@ -1,0 +1,35 @@
+.squad-wrap {
+  display: flex;
+  font-size: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.squad-wrap:last-child {
+  margin-bottom: 0;
+}
+
+.squad-wrap div ul {
+  padding: 0.5rem 0 ;
+}
+
+.squad-wrap ul li {
+  font-size: 0.75rem;
+}
+
+.squad-bottom {
+  width: 100%;
+}
+
+.squad-wrap button {
+  float: right;
+  background-color: transparent;
+  border: none;
+  max-width: 16px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.squad-wrap button img {
+  width: 100%;
+}

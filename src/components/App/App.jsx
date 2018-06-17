@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
+
 import Header from '../Header/Header'
-import Panel from '../../utils/Panel'
+import Panel from '../../common/Panel'
 import HeroesList from '../HeroesList/HeroesList'
 import NewHeroForm from '../NewHeroForm/NewHeroForm'
 import SquadEditor from '../SquadEditor/SquadEditor'
+import SquadList  from '../SquadList/SquadList'
+import { getSquadList, postSquad, deleteSquad } from '../../utils/api'
 
 import './App.css'
 
@@ -14,8 +17,18 @@ class App extends Component {
 
     this.state = {
       newHero: {},
-      sqadEditorList: []
+      squadEditorList: [],
+      squadsList : []
     }
+  }
+
+  componentDidMount () {
+    getSquadList()
+      .then( result => {
+        this.setState({
+          squadsList: [...result.data]
+        })
+      })
   }
 
   newHeroSubmit = (newHero) => {
@@ -32,20 +45,49 @@ class App extends Component {
 
   clearSquadEditor = () => {
     this.setState({
-      sqadEditorList: []
+      squadEditorList: []
     })
   }
 
   heroToSquad = (hero) => () => {
     this.setState({
-      sqadEditorList: [hero, ...this.state.sqadEditorList]
+      squadEditorList: [hero, ...this.state.squadEditorList]
     })
   }
 
+  saveSquad = (stats) => () => {
+    const squadEditorList = this.state.squadEditorList
+
+    if (squadEditorList && squadEditorList.length > 0) {
+      const squad = {
+        stats,
+        heroes: squadEditorList
+      }
+
+    postSquad({...squad})
+      .then( response => {
+        if(response.status === 201){
+          this.setState({
+            squadsList: [response.data, ...this.state.squadsList],
+            squadEditorList: []
+          })
+        }
+      })
+    }
+  }
+
+  squadRemove = (id) => () => {
+    deleteSquad(id)
+      .then( () => {
+        this.setState({
+          squadsList: this.state.squadsList.filter(item => item.id !== id)
+        })
+      })
+  }
+
   heroFromEditRemove = (id) => () => {
-    console.log(id)
     this.setState({
-      sqadEditorList: this.state.sqadEditorList.filter( item => item.id !== id)
+      squadEditorList: this.state.squadEditorList.filter(item => item.id !== id)
     })
   }
 
@@ -62,24 +104,27 @@ class App extends Component {
               newHero={this.state.newHero}
               clearHero={this.clearHero}
               heroToSquad={this.heroToSquad}
-              heroesInEditor={this.state.sqadEditorList}
+              heroesInEditor={this.state.squadEditorList}
             />
           </Panel>
           <Panel className="col" title='Squad Editor'>
             <SquadEditor
-              editorList={this.state.sqadEditorList}
+              editorList={this.state.squadEditorList}
               onClear={this.clearSquadEditor}
+              onSave={this.saveSquad}
               heroRemove={this.heroFromEditRemove}
             />
           </Panel>
           <Panel className="col" title='Saved squads'>
-            Heaer would be a form
+            <SquadList
+              squads={this.state.squadsList}
+              onRemove={this.squadRemove}
+            />
           </Panel>
         </div>
       </div>
     )
   }
-
 }
 
 export default App;

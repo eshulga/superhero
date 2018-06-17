@@ -1,4 +1,4 @@
-.hero-stats {
+.hero-stats, .squad-wrap {
   display: block;
   margin-top: 0.75rem;
   padding-top: 0.75rem;
@@ -7,11 +7,15 @@
   line-height: 1.5;
 }
 
-.hero-wrap {
+.hero-wrap, .squad-wrap {
   padding: 1rem;
   background-color: #f1f1f1;
   margin: 1rem 0;
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.397);
+}
+
+.hero-wrap:last-child {
+  margin-bottom: 0;
 }
 
 .hero-panel {

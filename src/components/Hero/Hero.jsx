@@ -41,22 +41,20 @@ class Hero extends Component {
     })
   }
 
-  HeroStats = () => {
-    const { intelligence, strength, speed }  = this.props
-
-    return (
+  HeroStats = ({ intelligence, strength, speed }) =>
+    (
       <div className='hero-stats'>
-      <ul>
-        <li>strength: {strength}</li>
-        <li>Intelligence: {intelligence}</li>
-        <li>Speed: {speed}</li>
-      </ul>
-    </div>
-  )}
+        <ul>
+          <li>strength: {strength}</li>
+          <li>Intelligence: {intelligence}</li>
+          <li>Speed: {speed}</li>
+        </ul>
+      </div>
+    )
 
   render () {
     const { statsAcive } = this.state
-    const { name, id, onRemove, heroToSquad, inEditor } = this.props
+    const { name, id, onRemove, heroToSquad, inEditor, speed, strength, intelligence } = this.props
 
     return (
       <li>
@@ -69,7 +67,7 @@ class Hero extends Component {
               </button>
               { !inEditor
                 ?
-                <button onClick={heroToSquad({...this.props })}>
+                <button onClick={heroToSquad({ id, name, speed, strength, intelligence})}>
                   <img src={tolistButton} alt='to list'/>
                 </button>
                 : ''
@@ -79,7 +77,7 @@ class Hero extends Component {
               </button>
             </div>
           </div>
-          {statsAcive && <this.HeroStats />}
+          {statsAcive && <this.HeroStats name={name} strength={strength} speed={speed} intelligence={intelligence} />}
         </div>
       </li>
     )

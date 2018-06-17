@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding-bottom: 1rem;
 }
 
 .App-logo {
@@ -43,6 +44,7 @@ button[type=submit], .squad-editor .controls button {
   padding: 0.5rem 1rem;
   color: #fff;
   box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.397);
+  cursor: pointer;
 }
 
 @keyframes App-logo-spin {
