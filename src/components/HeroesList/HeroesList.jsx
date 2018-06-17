@@ -30,7 +30,6 @@ class HeroesList extends Component {
   static defaultProps = {
     newHero: {},
     heroesInEditor: [],
-    clearHero: () => null
   }
 
   state = {
@@ -105,11 +104,11 @@ class HeroesList extends Component {
         <ul>
           { filteredList.length > 0 ? filteredList
             .map((item) => <Hero
-                                {...item}
-                                key={item.id}
-                                onRemove={this.removeHero(item.id)}
-                                heroToSquad={this.props.heroToSquad}
-                              />) : 'no result ...'
+                              {...item}
+                              key={item.id}
+                              onRemove={this.removeHero(item.id)}
+                              heroToSquad={this.props.heroToSquad}
+                            />) : 'no result ...'
           }
         </ul>
       </div>

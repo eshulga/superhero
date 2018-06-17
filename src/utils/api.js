@@ -24,7 +24,7 @@ export const postSquad = (squad) =>
     .then(response => processApiResponse({
       response,
       successCode: 201,
-      errorMessage: 'can`t get SquadList'
+      errorMessage: 'can`t post Squad'
     }))
     .catch(handlePromiseError)
 
@@ -34,7 +34,7 @@ export const deleteSquad = (id) =>
     .then(response => processApiResponse({
       response,
       successCode: 200,
-      errorMessage: 'can`t get SquadList'
+      errorMessage: 'can`t delete Squad'
     }))
     .catch(handlePromiseError)
 
@@ -44,7 +44,7 @@ export const getHeroList = () =>
       .then(response => processApiResponse({
         response,
         successCode: 200,
-        errorMessage: 'can`t get SquadList'
+        errorMessage: 'can`t get HeroList'
       }))
       .catch(handlePromiseError)
 
@@ -54,7 +54,7 @@ export const deleteHero = (id) =>
       .then(response => processApiResponse({
         response,
         successCode: 200,
-        errorMessage: 'can`t get SquadList'
+        errorMessage: 'can`t delete Hero'
       }))
       .catch(handlePromiseError)
 
@@ -64,6 +64,6 @@ export const postHero = (hero) =>
       .then(response => processApiResponse({
         response,
         successCode: 200,
-        errorMessage: 'can`t get SquadList'
+        errorMessage: 'can`t pos Hero'
       }))
       .catch(handlePromiseError)

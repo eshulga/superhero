@@ -56,11 +56,11 @@ SquadList.propTypes = {
       intelligence: PropTypes.number.isRequired,
       speed: PropTypes.number.isRequired
     })),
-    stats: PropTypes.arrayOf(PropTypes.shape({
+    stats: PropTypes.shape({
       str: PropTypes.number.isRequired,
       int: PropTypes.number.isRequired,
       spd: PropTypes.number.isRequired
-    }))
+    })
   })).isRequired,
   onRemove: PropTypes.func.isRequired
 }
