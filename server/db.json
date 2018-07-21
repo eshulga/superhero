@@ -1,0 +1,82 @@
+{
+  "heroes": [
+    {
+      "name": "Superman",
+      "strength": 10,
+      "intelligence": 7,
+      "speed": 10,
+      "id": 1
+    },
+    {
+      "name": "Spiderman",
+      "strength": 6,
+      "intelligence": 7,
+      "speed": 8,
+      "id": 2
+    },
+    {
+      "name": "Tor",
+      "strength": 10,
+      "intelligence": 7,
+      "speed": 5,
+      "id": 3
+    },
+    {
+      "name": "Batman",
+      "strength": 5,
+      "intelligence": 9,
+      "speed": 5,
+      "id": 4
+    }
+  ],
+  "squads": [
+    {
+      "stats": {
+        "str": 11,
+        "spd": 13,
+        "int": 16
+      },
+      "heroes": [
+        {
+          "id": 2,
+          "name": "Spiderman",
+          "speed": 8,
+          "strength": 6,
+          "intelligence": 7
+        },
+        {
+          "id": 4,
+          "name": "Batman",
+          "speed": 5,
+          "strength": 5,
+          "intelligence": 9
+        }
+      ],
+      "id": 1
+    },
+    {
+      "stats": {
+        "str": 16,
+        "spd": 13,
+        "int": 14
+      },
+      "heroes": [
+        {
+          "id": 3,
+          "name": "Tor",
+          "speed": 5,
+          "strength": 10,
+          "intelligence": 7
+        },
+        {
+          "id": 2,
+          "name": "Spiderman",
+          "speed": 8,
+          "strength": 6,
+          "intelligence": 7
+        }
+      ],
+      "id": 4
+    }
+  ]
+}
