@@ -6,40 +6,32 @@ import HeroesList from '../HeroesList/HeroesList';
 import NewHeroForm from '../NewHeroForm/NewHeroForm';
 import SquadEditor from '../SquadEditor/SquadEditor';
 import SquadList from '../SquadList/SquadList';
-import { getSquadList, postSquad, deleteSquad } from '../../utils/api';
+import * as API from '../../utils/api';
 
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      newHero: {},
-      squadEditorList: [],
-      squadsList: [],
-    };
-  }
+  state = {
+    squadEditorList: [],
+    squadsList: [],
+    heroList: [],
+    searchList: [],
+    searchQuery: '',
+  };
 
   componentDidMount() {
-    getSquadList().then(result => {
+    API.getHeroList().then(result => {
+      this.setState({
+        heroList: result.data,
+      });
+    });
+
+    API.getSquadList().then(result => {
       this.setState({
         squadsList: [...result.data],
       });
     });
   }
-
-  newHeroSubmit = newHero => {
-    this.setState({
-      newHero: newHero.state,
-    });
-  };
-
-  clearHero = () => {
-    this.setState({
-      newHero: {},
-    });
-  };
 
   clearSquadEditor = () => {
     this.setState({
@@ -47,49 +39,104 @@ class App extends Component {
     });
   };
 
-  heroToSquad = hero => () => {
-    this.setState({
-      squadEditorList: [hero, ...this.state.squadEditorList],
-    });
+  heroToSquad = id => () => {
+    this.setState(prevState => ({
+      squadEditorList: [id, ...prevState.squadEditorList],
+    }));
   };
 
-  saveSquad = stats => () => {
-    const squadEditorList = this.state.squadEditorList;
+  removeFromSquadEditorList = id => () => {
+    this.setState(prevState => ({
+      squadEditorList: prevState.squadEditorList.filter(item => item !== id),
+    }));
+  };
+
+  saveSquad = () => {
+    const { squadEditorList, heroList } = this.state;
+
+    const totalStat = stat => {
+      let total = 0;
+
+      squadEditorList.forEach(id => {
+        const hero = heroList.find(item => item.id === id);
+        total += hero[stat];
+      });
+
+      return total;
+    };
 
     if (squadEditorList && squadEditorList.length > 0) {
       const squad = {
-        stats,
-        heroes: squadEditorList,
+        heroes: squadEditorList.map(id =>
+          heroList.find(item => item.id === id),
+        ),
+        stats: {
+          str: totalStat('strength'),
+          spd: totalStat('speed'),
+          int: totalStat('intelligence'),
+        },
       };
 
-      postSquad({ ...squad }).then(response => {
+      API.postSquad({ ...squad }).then(response => {
         if (response.status === 201) {
-          this.setState({
-            squadsList: [response.data, ...this.state.squadsList],
+          this.setState(prevState => ({
+            squadsList: [response.data, ...prevState.squadsList],
             squadEditorList: [],
-          });
+          }));
         }
       });
     }
   };
 
   squadRemove = id => () => {
-    deleteSquad(id).then(() => {
-      this.setState({
-        squadsList: this.state.squadsList.filter(item => item.id !== id),
-      });
+    API.deleteSquad(id).then(() => {
+      this.setState(prevState => ({
+        squadsList: prevState.squadsList.filter(item => item.id !== id),
+      }));
     });
   };
 
-  heroFromEditRemove = id => () => {
+  newHeroSubmit = newHero => {
+    if (Object.keys(newHero).length !== 0) {
+      const heroExist = this.state.heroList.filter(
+        item => item.name === newHero.name,
+      );
+
+      if (heroExist.length === 0)
+        API.postHero({ ...newHero }).then(response => {
+          this.setState(prevState => ({
+            heroList: [response.data, ...prevState.heroList],
+          }));
+        });
+    }
+  };
+
+  removeHero = itemId => () => {
+    API.deleteHero(itemId).then(() => {
+      this.setState(prevState => ({
+        heroList: prevState.heroList.filter(item => item.id !== itemId),
+      }));
+    });
+  };
+
+  handleSearch = e => {
+    const { target } = e;
+
     this.setState({
-      squadEditorList: this.state.squadEditorList.filter(
-        item => item.id !== id,
-      ),
+      searchQuery: target.value.toLowerCase(),
     });
   };
 
   render() {
+    const { squadEditorList, squadsList, heroList, searchQuery } = this.state;
+
+    const editorList = heroList.filter(item =>
+      squadEditorList.includes(item.id),
+    );
+    const heroListPrepare = heroList
+      .filter(item => !squadEditorList.includes(item.id))
+      .filter(item => item.name.toLowerCase().indexOf(searchQuery) > -1);
+
     return (
       <div className="App">
         <Header />
@@ -99,25 +146,23 @@ class App extends Component {
           </Panel>
           <Panel className="col" title="Heroes">
             <HeroesList
-              newHero={this.state.newHero}
-              clearHero={this.clearHero}
+              heroList={heroListPrepare}
+              searchQuery={searchQuery}
+              removeHero={this.removeHero}
               heroToSquad={this.heroToSquad}
-              heroesInEditor={this.state.squadEditorList}
+              handleSearch={this.handleSearch}
             />
           </Panel>
           <Panel className="col" title="Squad Editor">
             <SquadEditor
-              editorList={this.state.squadEditorList}
+              editorList={editorList}
               onClear={this.clearSquadEditor}
               onSave={this.saveSquad}
-              heroRemove={this.heroFromEditRemove}
+              heroRemove={this.removeFromSquadEditorList}
             />
           </Panel>
           <Panel className="col" title="Saved squads">
-            <SquadList
-              squads={this.state.squadsList}
-              onRemove={this.squadRemove}
-            />
+            <SquadList squads={squadsList} onRemove={this.squadRemove} />
           </Panel>
         </div>
       </div>

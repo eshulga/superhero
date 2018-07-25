@@ -36,14 +36,7 @@ class NewHeroForm extends Component {
     event.preventDefault();
     const { name } = this.state;
     if (name !== '') {
-      this.props.onSubmit({ state: this.state });
-
-      this.setState({
-        name: '',
-        strength: 1,
-        intelligence: 1,
-        speed: 1,
-      });
+      this.props.onSubmit({ ...this.state });
     }
   };
 

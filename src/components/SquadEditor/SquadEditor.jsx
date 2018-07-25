@@ -16,65 +16,36 @@ class SquadEditor extends Component {
     ).isRequired,
     onClear: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    heroRemove: PropTypes.func,
+    heroRemove: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {
-    heroRemove: () => null,
+  totalStat = stat => {
+    const { editorList } = this.props;
+    let total = 0;
+    editorList.forEach(item => {
+      total += item[stat];
+    });
+
+    return total;
   };
-
-  state = {
-    strengthTotal: 0,
-    speedTotal: 0,
-    intelligenceTotal: 0,
-  };
-
-  static getDerivedStateFromProps(nextProps) {
-    const { editorList } = nextProps;
-    let returnResult;
-
-    const newState = {
-      strengthTotal: 0,
-      speedTotal: 0,
-      intelligenceTotal: 0,
-    };
-
-    if (!editorList.length) {
-      returnResult = newState;
-    } else {
-      editorList.forEach(item => {
-        newState.strengthTotal += item.strength;
-        newState.speedTotal += item.speed;
-        newState.intelligenceTotal += item.intelligence;
-      });
-
-      returnResult = newState;
-    }
-
-    return returnResult;
-  }
 
   render() {
-    const { strengthTotal, speedTotal, intelligenceTotal } = this.state;
     const { editorList, onClear, onSave, heroRemove } = this.props;
 
     return (
       <div className="squad-editor">
         <div className="controls">
-          <button
-            onClick={onSave({
-              str: strengthTotal,
-              spd: speedTotal,
-              int: intelligenceTotal,
-            })}>
-            save
-          </button>
+          <button onClick={onSave}>save</button>
           <button onClick={onClear}>reset</button>
         </div>
         <div className="squad-stats">
-          <span>strength: {strengthTotal}</span>
-          <span>Speed: {speedTotal}</span>
-          <span>Intelligence: {intelligenceTotal}</span>
+          <span>Strength: {this.totalStat('strength')}</span>
+          <span>
+            Speed: {this.totalStat('speed')}
+          </span>
+          <span>
+            Intelligence: {this.totalStat('intelligence')}
+          </span>
         </div>
         <div className="squad-list">
           <ul>

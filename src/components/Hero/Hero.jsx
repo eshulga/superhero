@@ -11,12 +11,13 @@ class Hero extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    intelligence: PropTypes.number,
-    strength: PropTypes.number,
-    speed: PropTypes.number,
     onRemove: PropTypes.func,
     heroToSquad: PropTypes.func,
     inEditor: PropTypes.bool,
+    speed: PropTypes.number.isRequired,
+    strength: PropTypes.number.isRequired,
+    intelligence: PropTypes.number.isRequired,
+
   };
 
   static defaultProps = {
@@ -39,16 +40,6 @@ class Hero extends Component {
       statsAcive: !this.state.statsAcive,
     });
   };
-
-  HeroStats = ({ intelligence, strength, speed }) => (
-    <div className="hero-stats">
-      <ul>
-        <li>strength: {strength}</li>
-        <li>Intelligence: {intelligence}</li>
-        <li>Speed: {speed}</li>
-      </ul>
-    </div>
-  );
 
   render() {
     const { statsAcive } = this.state;
@@ -74,13 +65,7 @@ class Hero extends Component {
               </button>
               {!inEditor ? (
                 <button
-                  onClick={heroToSquad({
-                    id,
-                    name,
-                    speed,
-                    strength,
-                    intelligence,
-                  })}>
+                  onClick={heroToSquad}>
                   <img src={tolistButton} alt="to list" />
                 </button>
               ) : (
@@ -92,12 +77,13 @@ class Hero extends Component {
             </div>
           </div>
           {statsAcive && (
-            <this.HeroStats
-              name={name}
-              strength={strength}
-              speed={speed}
-              intelligence={intelligence}
-            />
+            <div className="hero-stats">
+              <ul>
+                <li>strength: {strength}</li>
+                <li>Intelligence: {intelligence}</li>
+                <li>Speed: {speed}</li>
+              </ul>
+            </div>
           )}
         </div>
       </li>

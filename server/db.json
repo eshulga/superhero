@@ -15,68 +15,82 @@
       "id": 2
     },
     {
-      "name": "Tor",
-      "strength": 10,
-      "intelligence": 7,
-      "speed": 5,
-      "id": 3
-    },
-    {
       "name": "Batman",
       "strength": 5,
       "intelligence": 9,
       "speed": 5,
       "id": 4
+    },
+    {
+      "name": "Halk",
+      "strength": 10,
+      "intelligence": 4,
+      "speed": 8,
+      "id": 5
+    },
+    {
+      "name": "Test",
+      "strength": 6,
+      "intelligence": 8,
+      "speed": 3,
+      "id": 7
+    },
+    {
+      "name": "werwer",
+      "strength": 6,
+      "intelligence": 1,
+      "speed": 7,
+      "id": 8
     }
   ],
   "squads": [
     {
-      "stats": {
-        "str": 11,
-        "spd": 13,
-        "int": 16
-      },
       "heroes": [
         {
-          "id": 2,
           "name": "Spiderman",
-          "speed": 8,
           "strength": 6,
-          "intelligence": 7
+          "intelligence": 7,
+          "speed": 8,
+          "id": 2
         },
         {
-          "id": 4,
-          "name": "Batman",
-          "speed": 5,
-          "strength": 5,
-          "intelligence": 9
+          "name": "Superman",
+          "strength": 10,
+          "intelligence": 7,
+          "speed": 10,
+          "id": 1
         }
       ],
-      "id": 1
-    },
-    {
       "stats": {
         "str": 16,
-        "spd": 13,
+        "spd": 18,
         "int": 14
       },
+      "id": 2
+    },
+    {
       "heroes": [
         {
-          "id": 3,
-          "name": "Tor",
-          "speed": 5,
-          "strength": 10,
-          "intelligence": 7
+          "name": "Spiderman",
+          "strength": 6,
+          "intelligence": 7,
+          "speed": 8,
+          "id": 2
         },
         {
-          "id": 2,
-          "name": "Spiderman",
-          "speed": 8,
+          "name": "werwer",
           "strength": 6,
-          "intelligence": 7
+          "intelligence": 1,
+          "speed": 7,
+          "id": 8
         }
       ],
-      "id": 4
+      "stats": {
+        "str": 12,
+        "spd": 15,
+        "int": 8
+      },
+      "id": 3
     }
   ]
 }

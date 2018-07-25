@@ -14,7 +14,7 @@ const processApiResponse = ({
 
 export const getSquadList = () =>
   axios
-  .get('http://localhost:3001/squads')
+  .get('/squads')
   .then(response => processApiResponse({
     response,
     successCode: 200,
@@ -24,7 +24,7 @@ export const getSquadList = () =>
 
 export const postSquad = (squad) =>
   axios
-  .post('http://localhost:3001/squads', squad)
+  .post('/squads', squad)
   .then(response => processApiResponse({
     response,
     successCode: 201,
@@ -34,7 +34,7 @@ export const postSquad = (squad) =>
 
 export const deleteSquad = (id) =>
   axios
-  .delete(`http://localhost:3001/squads/${id}`)
+  .delete(`/squads/${id}`)
   .then(response => processApiResponse({
     response,
     successCode: 200,
@@ -44,7 +44,7 @@ export const deleteSquad = (id) =>
 
 export const getHeroList = () =>
   axios
-  .get('http://localhost:3001/heroes')
+  .get('/heroes')
   .then(response => processApiResponse({
     response,
     successCode: 200,
@@ -54,7 +54,7 @@ export const getHeroList = () =>
 
 export const deleteHero = (id) =>
   axios
-  .delete(`http://localhost:3001/heroes/${id}`)
+  .delete(`/heroes/${id}`)
   .then(response => processApiResponse({
     response,
     successCode: 200,
@@ -64,7 +64,7 @@ export const deleteHero = (id) =>
 
 export const postHero = (hero) =>
   axios
-  .post('http://localhost:3001/heroes', hero)
+  .post('/heroes', hero)
   .then(response => processApiResponse({
     response,
     successCode: 200,
